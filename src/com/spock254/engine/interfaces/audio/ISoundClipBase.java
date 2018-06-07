@@ -7,5 +7,6 @@ public interface ISoundClipBase {
     public void stop();
     public boolean isPlaying();
     public double getVolume();
-
+    public String getPath();
+    public void setPath(String path);
 }

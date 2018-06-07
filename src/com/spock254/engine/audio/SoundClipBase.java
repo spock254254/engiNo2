@@ -6,9 +6,11 @@ import javafx.scene.media.AudioClip;
 public class SoundClipBase implements ISoundClipBase {
 
     AudioClip audioClip;
+    String path;
+
 
     public SoundClipBase(String path){
-
+        setPath(path);
         audioClip = new AudioClip(getClass().getResource(path).toString());
 
     }
@@ -33,6 +35,14 @@ public class SoundClipBase implements ISoundClipBase {
     @Override
     public double getVolume() {
         return  audioClip.getVolume();
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     //TODO temp method
