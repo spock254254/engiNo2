@@ -10,6 +10,8 @@ public class SoundClipBase implements ISoundClipBase {
 
 
     public SoundClipBase(String path){
+        if(path == null || path.isEmpty())
+            throw new IllegalArgumentException("sound clip can't be null or empty");
         setPath(path);
         audioClip = new AudioClip(getClass().getResource(path).toString());
 
@@ -36,13 +38,16 @@ public class SoundClipBase implements ISoundClipBase {
     public double getVolume() {
         return  audioClip.getVolume();
     }
-
+    @Override
     public String getPath() {
         return path;
     }
-
-    public void setPath(String path) {
-        this.path = path;
+    @Override
+    public void setPath(String path) throws IllegalArgumentException {
+        if(path.endsWith(".wav") && path.startsWith("/res/audio/"))
+            this.path = path;
+        else
+            throw new IllegalArgumentException("illegal sound clip path");
     }
 
     //TODO temp method
