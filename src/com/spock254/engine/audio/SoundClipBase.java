@@ -22,8 +22,8 @@ public class SoundClipBase implements ISoundClipBase {
     }
     @Override
     public void setVolume(double volume){
-
-        audioClip.setVolume(volume);
+        //if(volume >= 0 && volume <= 100)
+            audioClip.setVolume(volume);
     }
     @Override
     public void stop(){
