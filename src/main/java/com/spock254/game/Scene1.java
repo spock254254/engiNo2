@@ -12,10 +12,9 @@ import com.spock254.engine.interfaces.ui.IUIObject;
 import com.spock254.engine.ui.ColorTable;
 import com.spock254.engine.ui.UIColor;
 import com.spock254.engine.ui.slider.Sliedr;
-import com.spock254.engine.interfaces.draw.IDrawingShape;
-import com.spock254.engine.interfaces.ui.IUIObject;
 
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 
 public class Scene1 extends AbstractGame {
 
@@ -34,7 +33,9 @@ public class Scene1 extends AbstractGame {
         slider = new Sliedr(kernel,line,button,50,50,50,
                 new UIColor(ColorTable.darkred),new UIColor(ColorTable.firebrick),null);
         System.out.print(Math.normalize(4,66,0,100,50));
-        soundClipBase = new SoundClipBase("/res/audio/David_Hilowitz_-_05_-_Solitude.wav");
+
+            soundClipBase = new SoundClipBase("res/audio/standart.wav");
+
         soundClipBase.play();
 
     }

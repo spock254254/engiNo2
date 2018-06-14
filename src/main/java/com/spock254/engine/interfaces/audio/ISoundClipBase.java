@@ -1,5 +1,7 @@
 package com.spock254.engine.interfaces.audio;
 
+import java.io.FileNotFoundException;
+
 public interface ISoundClipBase {
 
     public void play();

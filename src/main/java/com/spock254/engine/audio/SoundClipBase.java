@@ -5,6 +5,8 @@ import com.spock254.engine.interfaces.audio.ISoundClipBase;
 import javafx.scene.media.AudioClip;
 import com.spock254.engine.interfaces.audio.ISoundClipBase;
 
+import java.io.FileNotFoundException;
+
 public class SoundClipBase implements ISoundClipBase {
 
     AudioClip audioClip;
@@ -16,7 +18,6 @@ public class SoundClipBase implements ISoundClipBase {
             throw new IllegalArgumentException("sound clip can't be null or empty");
         setPath(path);
         audioClip = new AudioClip(getClass().getResource(path).toString());
-
     }
     @Override
     public void play(){
@@ -24,8 +25,10 @@ public class SoundClipBase implements ISoundClipBase {
     }
     @Override
     public void setVolume(double volume){
-        //if(volume >= 0 && volume <= 100)
+        if(volume >= 0 && volume <= 100)
             audioClip.setVolume(volume);
+        else
+            audioClip.setVolume(0);
     }
     @Override
     public void stop(){
@@ -45,11 +48,13 @@ public class SoundClipBase implements ISoundClipBase {
         return path;
     }
     @Override
-    public void setPath(String path) throws IllegalArgumentException {
-        if(path.endsWith(".wav") && path.startsWith("/res/audio/"))
+    public void setPath(String path) {
+        if(path == null || path.isEmpty())
+            throw new IllegalArgumentException("path can't be null or empty");
+        else if(path.endsWith(".wav"))
             this.path = path;
         else
-            throw new IllegalArgumentException("illegal sound clip path");
+            throw new IllegalArgumentException("invalid path");
     }
 
     //TODO temp method
