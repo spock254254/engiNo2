@@ -5,6 +5,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.fest.assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 
 
 class SoundClipBaseTest {
@@ -94,13 +97,66 @@ class SoundClipBaseTest {
         Assertions.assertThat(validPath)
                 .isSameAs(soundClipBase.getPath());
     }
-    //TODO :  expected same instance but found:<50.0> and:<50.0>
+
     @Test
     public void getVolume_setValidVolume_getValidVolume(){
-        final double VOLUME = 50;
+        final double VOLUME = 50.0;
         soundClipBase.setVolume(VOLUME);
-        Assertions.assertThat(VOLUME)
-                .isSameAs(soundClipBase.getVolume());
+        Assertions.assertThat(soundClipBase.getVolume())
+                .isEqualTo(VOLUME);
+
+    }
+
+    @ParameterizedTest(name = "run #{index} with [{arguments}]")
+    @ValueSource(doubles = {0,40,100})
+    public void setVolume_validVolumeValues_setValidVolume(double volume){
+
+        soundClipBase.setVolume(volume);
+        Assertions.assertThat(soundClipBase.getVolume())
+                .isEqualTo(volume);
+    }
+    @ParameterizedTest(name = "run #{index} with [{arguments}]")
+    @ValueSource(doubles = {0,-40,101})
+    public void setVolume_invalidVolumeValues_getZero(double volume){
+        final double DEFAULT_VOLUME = 0;
+
+        soundClipBase.setVolume(volume);
+        Assertions.assertThat(soundClipBase.getVolume())
+                .isEqualTo(DEFAULT_VOLUME);
+    }
+
+    // TODO : test play method
+
+    @Test
+    public void isPlaying_callPlay_getTrue(){
+
+        soundClipBase.play();
+        Assertions.assertThat(soundClipBase.isPlaying())
+                .isTrue();
+
+    }
+    @Test
+    public void isPlaying_notCallPlay_getFalse(){
+
+        Assertions.assertThat(soundClipBase.isPlaying())
+                .isFalse();
+    }
+
+    //TODO : test isPlaying when SUT 'audioClip = null'
+    //TODO : test stop when SUT 'audioClip = null'
+    //TODO : test play when SUT 'audioClip = null'
+
+    @Test
+    public void stop_audioClipPlaying_getTrue(){
+        soundClipBase.play();
+        Assertions.assertThat(soundClipBase.stop())
+                .isTrue();
+    }
+    @Test
+    public void stop_audioClipNotPlaying_getTrue(){
+
+        Assertions.assertThat(soundClipBase.stop())
+                .isFalse();
     }
 
 }

@@ -9,8 +9,8 @@ import java.io.FileNotFoundException;
 
 public class SoundClipBase implements ISoundClipBase {
 
-    AudioClip audioClip;
-    String path;
+    private AudioClip audioClip;
+    private String path;
 
 
     public SoundClipBase(String path){
@@ -19,8 +19,11 @@ public class SoundClipBase implements ISoundClipBase {
         setPath(path);
         audioClip = new AudioClip(getClass().getResource(path).toString());
     }
+
     @Override
     public void play(){
+        if(audioClip == null)
+            throw new NullPointerException("audioClip is null");
         audioClip.play();
     }
     @Override
@@ -31,16 +34,27 @@ public class SoundClipBase implements ISoundClipBase {
             audioClip.setVolume(0);
     }
     @Override
-    public void stop(){
-        audioClip.stop();
+    public boolean stop(){
+        if(audioClip == null)
+            throw new NullPointerException("audioClip is null");
+        if(audioClip.isPlaying()){
+            audioClip.stop();
+            return true;
+        }
+        return false;
     }
     @Override
     public boolean isPlaying(){
+        if(audioClip == null)
+            throw new NullPointerException("audioClip is null");
         return audioClip.isPlaying();
+
     }
 
     @Override
     public double getVolume() {
+        if(audioClip == null)
+            throw new NullPointerException("audioClip is null");
         return  audioClip.getVolume();
     }
     @Override
