@@ -13,7 +13,10 @@ public class Image implements IImage {
     private boolean isAlpha = false;
 
     public Image(String path) throws IOException{
-
+        if(path == null)
+            throw new IllegalArgumentException("image path is null");
+        if(path.isEmpty())
+            throw new IllegalArgumentException("image path is empty");
         BufferedImage image = null;
 
 
@@ -32,6 +35,8 @@ public class Image implements IImage {
     }
     @Override
     public void setWidth(int width) {
+        if(width < 0)
+            throw new IllegalArgumentException("width less then 0");
         this.width = width;
     }
     @Override
@@ -40,7 +45,8 @@ public class Image implements IImage {
     }
     @Override
     public void setHeight(int height) {
-        this.height = height;
+        if(height < 0)
+            throw new IllegalArgumentException("height less then 0");this.height = height;
     }
     @Override
     public int[] getPixels() {
