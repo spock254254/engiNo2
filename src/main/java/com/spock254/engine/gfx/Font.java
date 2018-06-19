@@ -2,18 +2,31 @@ package com.spock254.engine.gfx;
 
 import com.spock254.engine.interfaces.gfx.IFont;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 
 public class Font  implements IFont {
 
-    public static final Font STANDART = new Font("/res/standart.png");
+    public static com.spock254.engine.gfx.Font STANDART = new Font("/res/standart.png");
+
+    private String fontPath;
 
     private Image fontImage;
     private int[] offsets;
     private int[] widths;
 
-    public Font(String path){
+    public Font(String path)  {
 
-        fontImage = new Image(path);
+        if(path == null || path.isEmpty())
+            throw new IllegalArgumentException("font file not found");
+
+        fontPath = path;
+        try {
+            fontImage = new Image(path);
+        } catch (Exception e) {
+            fontImage = STANDART.fontImage;
+        }
 
         offsets = new int[59];
         widths = new int[59];
@@ -34,6 +47,8 @@ public class Font  implements IFont {
     }
     @Override
     public int getTextPixelWeight(String str){
+        if(str == null || str.isEmpty())
+            throw new IllegalArgumentException("invalid word");
         int size = 0;
         str = str.toUpperCase();
         for(int i = 0; i < str.length();i ++){
@@ -44,7 +59,14 @@ public class Font  implements IFont {
 
     @Override
     public int getTextPixelHeight(String str) {
+        if(str == null || str.isEmpty())
+            throw new IllegalArgumentException("invalid word");
         return fontImage.getHeight();
+    }
+
+    @Override
+    public String getFontPath() {
+        return fontPath;
     }
 
     public static Font getSTANDART() {

@@ -13,5 +13,6 @@ public interface IFont {
     public void setWidths(int[] widths);
     public int getTextPixelWeight(String str);
     public int getTextPixelHeight(String str);
+    public String getFontPath();
 
 }

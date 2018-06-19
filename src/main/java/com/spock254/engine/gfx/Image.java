@@ -12,15 +12,13 @@ public class Image implements IImage {
     private int[] pixels;
     private boolean isAlpha = false;
 
-    public Image(String path){
+    public Image(String path) throws IOException{
 
         BufferedImage image = null;
 
-        try {
+
             image = ImageIO.read(Image.class.getResourceAsStream(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         width = image.getWidth();
         height = image.getHeight();

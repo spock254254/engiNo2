@@ -142,10 +142,6 @@ class SoundClipBaseTest {
                 .isFalse();
     }
 
-    //TODO : test isPlaying when SUT 'audioClip = null'
-    //TODO : test stop when SUT 'audioClip = null'
-    //TODO : test play when SUT 'audioClip = null'
-
     @Test
     public void stop_audioClipPlaying_getTrue(){
         soundClipBase.play();
