@@ -78,6 +78,8 @@ public class Font  implements IFont {
     }
     @Override
     public void setFontImage(Image fontImage) {
+        if(fontImage == null)
+            throw new IllegalArgumentException("image can't be null");
         this.fontImage = fontImage;
     }
     @Override
@@ -86,6 +88,10 @@ public class Font  implements IFont {
     }
     @Override
     public void setOffsets(int[] offsets) {
+        if(offsets == null)
+            throw new IllegalArgumentException("offsets can't be null");
+        if(offsets.length == 0)
+            throw new IllegalArgumentException("offsets can't empty");
         this.offsets = offsets;
     }
     @Override
@@ -94,6 +100,10 @@ public class Font  implements IFont {
     }
     @Override
     public void setWidths(int[] widths) {
+        if(widths == null)
+            throw new IllegalArgumentException("widths can't be null");
+        if(widths.length == 0)
+            throw new IllegalArgumentException("widths can't empty");
         this.widths = widths;
     }
 }

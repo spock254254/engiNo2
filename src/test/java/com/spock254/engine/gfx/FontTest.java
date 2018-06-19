@@ -2,18 +2,9 @@ package com.spock254.engine.gfx;
 
 import com.spock254.engine.interfaces.gfx.IFont;
 import com.spock254.engine.interfaces.gfx.IImage;
-import org.fest.assertions.Assert;
 import org.fest.assertions.Assertions;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.function.Executable;
-import org.mockito.Mockito;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class FontTest {
 
@@ -33,9 +24,8 @@ class FontTest {
     }
 
     @BeforeEach
-    void setUp() throws IOException{
+    void setUp(){
         font = new Font(validPath);
-
     }
 
     @AfterEach
@@ -152,7 +142,6 @@ class FontTest {
     }
     @Test
     public void getFontPath_invalidInit_getStandartPath(){
-        IFont invalidFont = new Font(invalidPath);
         Assertions.assertThat(font.getFontPath())
                 .isSameAs(Font.getSTANDART().getFontPath());
     }
@@ -176,4 +165,103 @@ class FontTest {
                 .isSameAs(validImage);
 
     }
+    @Test
+    public void setFontImage_nullImage_throwIllegalArgumentException() throws IOException{
+
+        try{
+            font.setFontImage(null);
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("image can't be null");
+        }
+    }
+    @Test
+    public void getOffsets_setValidOffsets_getOffsets(){
+        int[] testOffset = {1,2,3,4,5};
+        font.setOffsets(testOffset);
+
+        Assertions.assertThat(font.getOffsets())
+                .isNotEmpty();
+        Assertions.assertThat(font.getOffsets().length)
+                .isEqualTo(testOffset.length);
+        Assertions.assertThat(font.getOffsets())
+                .isIn(testOffset);
+    }
+    @Test
+    public void setOffsets_setValidOffsets_getOffsets(){
+        int[] testOffset = {1,2,3,4,5};
+        font.setOffsets(testOffset);
+
+        Assertions.assertThat(font.getOffsets())
+                .isNotEmpty();
+        Assertions.assertThat(font.getOffsets().length)
+                .isEqualTo(testOffset.length);
+        Assertions.assertThat(font.getOffsets())
+                .isIn(testOffset);
+    }
+    @Test
+    public void setOffsets_setNull_throwIllegalArgumentException(){
+
+        try{
+            font.setOffsets(null);
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("offsets can't be null");
+        }
+    }
+    @Test
+    public void setOffsets_setEmptyArray_throwIllegalArgumentException(){
+        int[] emptyArray = {};
+        try{
+            font.setOffsets(emptyArray);
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("offsets can't empty");
+        }
+    }
+    @Test
+    public void getWidths_setValidWidths_getWidths(){
+        int[] testWidths = {1,2,3,4,5};
+        font.setWidths(testWidths);
+
+        Assertions.assertThat(font.getWidths())
+                .isNotEmpty();
+        Assertions.assertThat(font.getWidths().length)
+                .isEqualTo(testWidths.length);
+        Assertions.assertThat(font.getWidths())
+                .isIn(testWidths);
+    }
+    @Test
+    public void setWidths_setValidWidths_getWidths(){
+        int[] testWidths = {1,2,3,4,5};
+        font.setWidths(testWidths);
+
+        Assertions.assertThat(font.getOffsets())
+                .isNotEmpty();
+        Assertions.assertThat(font.getWidths().length)
+                .isEqualTo(testWidths.length);
+        Assertions.assertThat(font.getWidths())
+                .isIn(testWidths);
+    }
+    @Test
+    public void setWidths_setNull_throwIllegalArgumentException(){
+
+        try{
+            font.setWidths(null);
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("widths can't be null");
+        }
+    }
+    @Test
+    public void setWidths_setEmptyArray_throwIllegalArgumentException(){
+        int[] emptyArray = {};
+        try{
+            font.setWidths(emptyArray);
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("widths can't empty");
+        }
+    }
+
 }
