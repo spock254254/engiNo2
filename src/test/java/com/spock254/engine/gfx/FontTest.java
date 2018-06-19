@@ -19,6 +19,7 @@ class FontTest {
 
     private static final String validPath = "/res/standart.png";
     private static final String invalidPath = "invalidPath";
+    private static final String TEST_WORD = "this is test word";
     private IFont font;
     private static IImage image;
 
@@ -89,15 +90,14 @@ class FontTest {
     }
     @Test
     public void getTextPixelWeight_validWord_getValidSize(){
-        String testWord = "this is test word";
-        testWord = testWord.toUpperCase();
+        String upperCaseTestWord = TEST_WORD.toUpperCase();
         int[] widths = font.getWidths();
         int size = 0;
-        for(char c : testWord.toCharArray()){
+        for(char c : upperCaseTestWord.toCharArray()){
             size += widths[((int)c) - 32];
         }
         Assertions.assertThat(size)
-                .isEqualTo(font.getTextPixelWeight(testWord));
+                .isEqualTo(font.getTextPixelWeight(upperCaseTestWord));
     }
     @Test
     public void getTextPixelWeight_nullWord_throwIllegalArgumentException(){
@@ -120,6 +120,12 @@ class FontTest {
         }
     }
     @Test
+    public void getTextPixelHeigh_validWord_getValidSize(){
+        String upperCaseTestWord = TEST_WORD.toUpperCase();
+        Assertions.assertThat(font.getTextPixelHeight(upperCaseTestWord))
+                .isEqualTo(font.getFontImage().getHeight());
+    }
+    @Test
     public void getTextPixelHeigh_nullWord_throwIllegalArgumentException(){
 
         try{
@@ -138,5 +144,36 @@ class FontTest {
             Assertions.assertThat(ex.getMessage())
                     .isSameAs("invalid word");
         }
+    }
+    @Test
+    public void getFontPath_validInit_getPath(){
+        Assertions.assertThat(font.getFontPath())
+                .isSameAs(validPath);
+    }
+    @Test
+    public void getFontPath_invalidInit_getStandartPath(){
+        IFont invalidFont = new Font(invalidPath);
+        Assertions.assertThat(font.getFontPath())
+                .isSameAs(Font.getSTANDART().getFontPath());
+    }
+    @Test
+    public void getFontImage_validInit_getImage(){
+        Assertions.assertThat(font.getFontImage())
+                .isNotNull();
+    }
+    @Test
+    public void getFontImage_invalidInit_getStandartImage(){
+        IFont invalidFont = new Font(invalidPath);
+        Assertions.assertThat(invalidFont.getFontImage())
+                .isSameAs(Font.getSTANDART().getFontImage());
+    }
+    @Test
+    public void setFontImage_validImage_getImage() throws IOException{
+        Image validImage = new Image(validPath);
+        font.setFontImage(validImage);
+
+        Assertions.assertThat(font.getFontImage())
+                .isSameAs(validImage);
+
     }
 }
