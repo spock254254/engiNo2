@@ -131,5 +131,111 @@ class ImageTest {
         Assertions.assertThat(image.getHeight())
                 .isEqualTo(buffImage.getHeight());
     }
-    
+    @Test
+    public void getPixels_validInit_getPixelsArray(){
+        int [] validPixels = buffImage.getRGB(0,0,buffImage.getWidth()
+                ,buffImage.getHeight(),null,0,buffImage.getWidth());
+        Assertions.assertThat(image.getPixels().length)
+                .isEqualTo(validPixels.length);
+        Assertions.assertThat(image.getPixels())
+                .contains(image.getPixels());
+    }
+    @Test
+    public void getPixels_setValidPixels_getPixelArray(){
+        int[] pixels = {1,2,3,4,5,6,7};
+        image.setPixels(pixels);
+        Assertions.assertThat(image.getPixels().length)
+                .isEqualTo(pixels.length);
+        Assertions.assertThat(image.getPixels())
+                .contains(pixels);
+    }
+    @Test
+    public void getPixels_setEmptyPixelsArray_throwIllegalArgumentException(){
+        int[] emptyPixels = {};
+        try{
+            image.setPixels(emptyPixels);
+            int [] result = image.getPixels();
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("pixels are empty");
+        }
+    }
+    @Test
+    public void getPixels_setNull_throwIllegalArgumentException(){
+        try{
+            image.setPixels(null);
+            int [] result = image.getPixels();
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("pixels array is null");
+        }
+    }
+    @Test
+    public void setPixels_validInit_getPixelsArray(){
+        int [] validPixels = buffImage.getRGB(0,0,buffImage.getWidth()
+                ,buffImage.getHeight(),null,0,buffImage.getWidth());
+        image.setPixels(validPixels);
+        Assertions.assertThat(image.getPixels().length)
+                .isEqualTo(validPixels.length);
+        Assertions.assertThat(image.getPixels())
+                .contains(validPixels);
+    }
+
+    @Test
+    public void setPixels_validSet_getPixelsArray(){
+        int[] pixels = {1,2,3,4,5,6,7};
+        image.setPixels(pixels);
+        Assertions.assertThat(image.getPixels().length)
+                .isEqualTo(pixels.length);
+        Assertions.assertThat(image.getPixels())
+                .contains(pixels);
+    }
+    @Test
+    public void setPixels_setEmptyPixelsArray_throwIllegalArgumentException(){
+        int[] emptyPixels = {};
+        try{
+            image.setPixels(emptyPixels);
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("pixels are empty");
+        }
+    }
+    @Test
+    public void setPixels_setNull_throwIllegalArgumentException(){
+        try{
+            image.setPixels(null);
+        }catch (IllegalArgumentException ex){
+            Assertions.assertThat(ex.getMessage())
+                    .isSameAs("pixels array is null");
+        }
+    }
+    @Test
+    public void isAlpha_validInit_getFalse(){
+        Assertions.assertThat(image.isAlpha())
+                .isFalse();
+    }
+    @Test
+    public void isAlpha_setTrue_getTrue(){
+        image.setAlpha(true);
+        Assertions.assertThat(image.isAlpha())
+                .isTrue();
+    }
+    @Test
+    public void isAlpha_setFalse_getFalse(){
+        image.setAlpha(false);
+        Assertions.assertThat(image.isAlpha())
+                .isFalse();
+    }
+    @Test
+    public void setAlpha_setTrue_getTrue(){
+        image.setAlpha(true);
+        Assertions.assertThat(image.isAlpha())
+                .isTrue();
+    }
+    @Test
+    public void setAlpha_setFalse_getFalse(){
+        image.setAlpha(false);
+        Assertions.assertThat(image.isAlpha())
+                .isFalse();
+    }
 }
