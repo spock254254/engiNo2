@@ -2,8 +2,6 @@ package com.spock254.engine.gfx;
 
 import com.spock254.engine.interfaces.gfx.IImage;
 import com.spock254.engine.interfaces.gfx.IImageRequest;
-import com.spock254.engine.interfaces.gfx.IImage;
-import com.spock254.engine.interfaces.gfx.IImageRequest;
 
 public class ImageRequest implements IImageRequest {
 
@@ -12,7 +10,8 @@ public class ImageRequest implements IImageRequest {
     private int offX, offY;
 
     public ImageRequest(IImage image,int zDepth,int offX,int offY){
-
+        if(image == null)
+            throw new IllegalArgumentException("image is null");
         this.image = image;
         this.zDepth = zDepth;
         this.offX = offX;
