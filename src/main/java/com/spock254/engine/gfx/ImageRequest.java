@@ -1,5 +1,6 @@
 package com.spock254.engine.gfx;
 
+import com.spock254.engine.helper.ScreenSize;
 import com.spock254.engine.interfaces.gfx.IImage;
 import com.spock254.engine.interfaces.gfx.IImageRequest;
 
@@ -12,10 +13,10 @@ public class ImageRequest implements IImageRequest {
     public ImageRequest(IImage image,int zDepth,int offX,int offY){
         if(image == null)
             throw new IllegalArgumentException("image is null");
-        this.image = image;
-        this.zDepth = zDepth;
-        this.offX = offX;
-        this.offY = offY;
+        setImage(image);
+        setzDepth(zDepth);
+        setOffX(offX);
+        setOffY(offY);
 
     }
     @Override
@@ -24,6 +25,8 @@ public class ImageRequest implements IImageRequest {
     }
     @Override
     public void setImage(IImage image) {
+        if(image == null)
+            throw new IllegalArgumentException("image is null");
         this.image = image;
     }
     @Override
@@ -40,6 +43,10 @@ public class ImageRequest implements IImageRequest {
     }
     @Override
     public void setOffX(int offX) {
+        if(offX < 0)
+            throw new NumberFormatException("offX less then 0");
+        if(offX > ScreenSize.getSizeScreen().width)
+            throw new NumberFormatException("offX more then screen size");
         this.offX = offX;
     }
     @Override
@@ -48,6 +55,10 @@ public class ImageRequest implements IImageRequest {
     }
     @Override
     public void setOffY(int offY) {
+        if(offY < 0)
+            throw new NumberFormatException("offY less then 0");
+        if(offY > ScreenSize.getSizeScreen().height)
+            throw new NumberFormatException("offY more then screen size");
         this.offY = offY;
     }
 }
